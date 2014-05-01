@@ -1,3 +1,6 @@
+# Developed by Camilo Dorado
+# April 27th / 2014
+
 ## The following functions allows to recover the inverse of a matrix from cache
 ## if it has been previously computed.
 
@@ -29,19 +32,18 @@ makeCacheMatrix <- function(x = matrix()) {
 ## Return the value of the inverse of a matrix, recovering from cache if it was 
 ## computed recently.
 
-cacheSolve <- function(x, ...) {
-  ## Return a matrix that is the inverse of matrix x.
-  # Define inverse: getInverse function
-  inverse <- x$getInverse()
+cacheSolve <- function(cachedx, ...) {
+  ## Return a matrix that is the inverse of matrix associated to cachedx.
+  # Define inverse: getInverse function of the cachedx object
+  inverse <- cachedx$getInverse()
   # If inverse is not NULL, recover it from cache and terminate.
   if(!is.null(inverse)) {
     message("Getting cached data...")
     return(inverse)
   }
   # If inverse is NULL, compute the inverse and return it.
-  #data <- makeCacheMatrix(x)$get()
-  data <- x$get()
+  data <- cachedx$get()
   inverse <- solve(data, ...)
-  x$setInverse(inverse)
+  cachedx$setInverse(inverse)
   inverse
 }
